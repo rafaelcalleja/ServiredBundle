@@ -4,6 +4,7 @@ namespace RC\ServiredBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
+use RC\ServiredBundle\Session\ServiredSession;
 
 /**
  * This is the class that validates and merges configuration from your app/config files
@@ -12,6 +13,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
+
     /**
      * {@inheritDoc}
      */
@@ -20,9 +22,21 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('rc_servired');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+            ->scalarNode('clave')->defaultValue(false)->end()
+            ->scalarNode('name')->defaultValue(false)->end()
+            ->scalarNode('code')->defaultValue(false)->end()
+            ->scalarNode('terminal')->defaultValue(false)->end()
+            ->scalarNode('transactiontype')->defaultValue(false)->end()
+            ->scalarNode('url')->defaultValue(false)->end()
+            ->scalarNode('provider')->defaultValue(false)->end()
+            ->scalarNode('url_ok')->defaultValue(false)->end()
+            ->scalarNode('url_ko')->defaultValue(false)->end()
+            ->scalarNode('cachedir')->defaultValue(false)->end()
+            ->scalarNode('paymethod')->defaultValue(false)->end()
+            ->scalarNode('payment_session_key')->defaultValue(ServiredSession::PAYMENT_SESSION_KEY)->end()
+        ->end();
 
         return $treeBuilder;
     }

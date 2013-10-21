@@ -1,7 +1,7 @@
 <html>
 <head>
 <body>
-<form target="_self" name="compra" action="{{ entity.provider }}" method="post" > 
+<form target="_blank" name="compra" action="https://sis-t.sermepa.es:25443/sis/realizarPago" method="post" target="tpv" > 
 <input type="hidden" name="Ds_Merchant_Amount" value='{{ entity.getDsMerchantAmount() }}'>
 <input type="hidden" name="Ds_Merchant_Currency" value='{{ entity.DsMerchantCurrency() }}'>
 <input type="hidden" name="Ds_Merchant_Order"  value='{{ entity.DsMerchantOrder() }}'>
@@ -10,15 +10,8 @@
 <input type="hidden" name="Ds_Merchant_TransactionType" value='{{ entity.DsMerchantTransactionType() }}'>
 <input type="hidden" name="Ds_Merchant_MerchantURL" value='{{ entity.DsMerchantMerchantURL() }}'>
 <input type="hidden" name="Ds_Merchant_MerchantSignature" value='{{ entity.DsMerchantMerchantSignature() }}'>
-<input type="hidden" name="Ds_Merchant_UrlOK" value='{{ entity.DsMerchantUrlOK() }}'>
-<input type="hidden" name="Ds_Merchant_UrlKO" value='{{ entity.DsMerchantUrlKO() }}'>
-<input type="hidden" name="Ds_Merchant_MerchantName" value='{{ entity.getDsMerchantMerchantName() }}'>
-<input type="hidden" name="Ds_Merchant_MerchantURL" value='{{ entity.getDsMerchantMerchantURL() }}'>
 <input type="hidden" name="Ds_Merchant_PayMethods" value='{{ entity.getDsMerchantPayMethods() }}'>
-<input type="submit" id="send" style='display:none'/>
+<input type="submit" id="send" />
 </form>
-<script>
-document.forms[0].submit();
-</script>
 </body>
 </html>

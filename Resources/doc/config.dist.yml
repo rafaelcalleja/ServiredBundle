@@ -1,0 +1,19 @@
+# app/config/config.yml
+#   - { resource: servired.yml }
+
+# app/config/servired.yml
+parameters:
+  vhost_name: demo.serviredbundle.com
+rc_servired:
+  clave: qwertyasdf0123456789
+  name: TPV Servired Bundle
+  code: 327234688
+  terminal: 001
+  transactiontype: 0
+  url: http://%vhost_name%/tpv/done
+  provider: https://sis-t.redsys.es:25443/sis/realizarPago #dev enviroment
+  #provider: https://sis.sermepa.es/sis/realizarPago #prod enviroment
+  url_ok: http://%vhost_name%/tpv/success
+  url_ko: http://%vhost_name%/tpv/failed
+  cachedir: "%kernel.root_dir%/TPV"
+  paymethod: T

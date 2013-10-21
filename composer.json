@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.2"
+        "php": ">=5.3.2",
+	"jms/serializer-bundle": "0.12.*"
     },
     "require-dev": {
         "symfony/class-loader": ">=2.1,<2.3-dev",

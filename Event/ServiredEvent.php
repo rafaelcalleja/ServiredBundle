@@ -9,5 +9,5 @@ final class ServiredEvent{
 
     const POST_PAYMENT_SUCCESS = 'post.payment.success';
 
-    const POST_PAYMENT_FAILED = 'post.payment.success';
+    const POST_PAYMENT_FAILED = 'post.payment.failed';
 }

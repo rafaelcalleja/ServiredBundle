@@ -30,7 +30,7 @@ class Signature {
 	public function getSignature($amount, $currency = 978){
 
         if(!$this->getOrder()){
-            throw new \Exception('Debes establecer $order via setOrder, antes de llamar a '.__FUNCTION__);
+            throw new \InvalidArgumentException('Debes establecer $order via setOrder, antes de llamar a '.__FUNCTION__);
         }
 
 		$message = ( $amount * 100 ).$this->getOrder().$this->code.$currency.$this->transactiontype.$this->url.$this->clave;
@@ -46,19 +46,19 @@ class Signature {
 	public function fillTPV($entity, $amount, $currency = 978){
 
         if( !$this->url_ok  ){
-            throw new Exception('Debes establecer el parametro url_ok via setUrlOK');
+            throw new \InvalidArgumentException('Debes establecer el parametro url_ok via setUrlOK');
         }
 
         if( !$this->url_ko ){
-            throw new Exception('Debes establecer el parametro url_ko via setUrlKO');
+            throw new \InvalidArgumentException('Debes establecer el parametro url_ko via setUrlKO');
         }
 
         if( !$this->url ){
-            throw new Exception('Debes establecer el parametro url via setUr');
+            throw new \InvalidArgumentException('Debes establecer el parametro url via setUrl');
         }
 
         if(!$this->getOrder()){
-            throw new \Exception('Debes establecer $order via setOrder, antes de llamar a '.__FUNCTION__);
+            throw new \InvalidArgumentException('Debes establecer $order via setOrder, antes de llamar a '.__FUNCTION__);
         }
 
 		$entity->setDsMerchantTransactionType($this->transactiontype);

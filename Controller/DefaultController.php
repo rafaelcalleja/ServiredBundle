@@ -28,8 +28,7 @@ class DefaultController extends Controller
 
         if( $this->get('validator')->validate($payment) ){
 
-            $this->get('session')->set(ServiredSession::TPV_LAST_IMPORTE_KEY, $amount);
-            $this->get('session')->set(ServiredSession::TPV_LAST_ID_KEY, $id);
+            $this->get('rc_servired.session.manager')->create($amount, $id, $this->getTransactionById($id)->getId());
             return $this->render('RCServiredBundle:Default:index.html.twig', array('entity' => $payment));
 
         }
@@ -39,16 +38,18 @@ class DefaultController extends Controller
 
     public function retryAction(){
 
-        if(!$this->get('session')->get(ServiredSession::TPV_LAST_IMPORTE_KEY) || !$this->get('session')->get(ServiredSession::TPV_LAST_ID_KEY)) throw $this->createNotFoundException('Page not found');
+        if( !$this->get('rc_servired.session.manager')->isActive() ) throw $this->createNotFoundException('Page not found');
 
-        return $this->indexAction($this->get('session')->get(ServiredSession::TPV_LAST_IMPORTE_KEY), $this->get('session')->get(ServiredSession::TPV_LAST_ID_KEY));
+        if ( $this->get('rc_servired.transaction.manager')->isOrderCompleted( $this->get('rc_servired.session.manager')->getCurrentOrder() ) ) throw new \Exception('Número de pedido repetido');
+
+        return $this->indexAction( $this->get('rc_servired.session.manager')->get(ServiredSession::RC_SERVIRED_AMOUNT_KEY), $this->get('rc_servired.session.manager')->get(ServiredSession::RC_SERVIRED_ORDER_KEY) );
 
 
     }
 
     /*
      * Este controlador es llamado por la caixa asyncronamente, tras finalizar un pago correctamente
-     * El parametro establecido en la configuracion como url debe ser accesible via internet, es decir, URL debe poder recibir una peticion POST externa.
+     * El parametro establecido en la configuracion como url debe ser accesible via internet, es decir, route id: rc_servired_done debe poder recibir una petición POST externa.
      */
 
     public function doneAction(){
@@ -63,15 +64,8 @@ class DefaultController extends Controller
             $transId = $request->request->get('Ds_Order');
             $status = $request->request->get('Ds_Response');
 
-
-            $em = $this->get('doctrine')->getManagerForClass('RC\ServiredBundle\Entity\Transaction');
-            $repository = $em->getRepository('RCServiredBundle:Transaction');
             /** @var $transaction \RC\ServiredBundle\Entity\Transaction */
-            $transaction = $repository->findOneBy(array('Ds_Order' => $transId));
-
-            if(!$transaction instanceof Transaction){
-                throw new \Exception('Unknown Transaction');
-            }
+            $transaction = $this->getTransactionById($transId);
 
             $transaction->bind($request->request->all());
 
@@ -84,9 +78,7 @@ class DefaultController extends Controller
 
 
             //TODO Guardamos transacciones erroneas, podriamos almacenar el texto del mensaje para su facil lectura.
-            $em->persist($transaction);
-            $em->flush();
-
+            $this->get('rc_servired.transaction.manager')->update($transaction);
 
             return new RedirectResponse($this->container->getParameter('rc_servired.url'));
 
@@ -102,9 +94,7 @@ class DefaultController extends Controller
     }
 
     public function successAction(){
-
-        $this->get('session')->remove(ServiredSession::TPV_LAST_IMPORTE_KEY);
-        $this->get('session')->remove(ServiredSession::TPV_LAST_ID_KEY);
+        $this->get('rc_servired.session.manager')->remove();
         return new RedirectResponse($this->container->getParameter('rc_servired.url_ok'));
 
     }
@@ -114,4 +104,18 @@ class DefaultController extends Controller
            return new RedirectResponse($this->container->getParameter('rc_servired.url_ko'));
 
     }
+
+    protected function getTransactionById($id){
+
+        $transaction = $this->get('rc_servired.transaction.manager')->find($id);
+
+        if(!$transaction instanceof Transaction){
+            throw new \Exception('Unknown Transaction');
+        }
+
+        return $transaction;
+
+    }
+
+
 }

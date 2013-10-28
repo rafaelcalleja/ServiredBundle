@@ -15,5 +15,4 @@ rc_servired:
   #provider: https://sis.sermepa.es/sis/realizarPago #prod enviroment
   url_ok: http://%vhost_name%/tpv/success
   url_ko: http://%vhost_name%/tpv/failed
-  cachedir: "%kernel.root_dir%/TPV"
   paymethod: T

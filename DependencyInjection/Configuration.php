@@ -33,9 +33,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('provider')->defaultValue(false)->end()
             ->scalarNode('url_ok')->defaultValue(false)->end()
             ->scalarNode('url_ko')->defaultValue(false)->end()
-            ->scalarNode('cachedir')->defaultValue(false)->end()
             ->scalarNode('paymethod')->defaultValue(false)->end()
-            ->scalarNode('payment_session_key')->defaultValue(ServiredSession::PAYMENT_SESSION_KEY)->end()
         ->end();
 
         return $treeBuilder;

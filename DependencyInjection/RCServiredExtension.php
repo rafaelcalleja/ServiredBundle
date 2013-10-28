@@ -34,9 +34,7 @@ class RCServiredExtension extends Extension
         $container->setParameter($this->getAlias().'.provider', $config['provider']);
         $container->setParameter($this->getAlias().'.url_ko', $config['url_ko']);
         $container->setParameter($this->getAlias().'.url_ok', $config['url_ok']);
-        $container->setParameter($this->getAlias().'.cachedir', $config['cachedir']);
         $container->setParameter($this->getAlias().'.paymethod', $config['paymethod']);
-        $container->setParameter($this->getAlias().'.payment_session_key', $config['payment_session_key']);
 
     }
 }

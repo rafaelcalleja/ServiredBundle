@@ -10,9 +10,9 @@ rc_servired:
   code: 327234688
   terminal: 001
   transactiontype: 0
-  url: http://%vhost_name%/tpv/done
+  url: http://%vhost_name%/demo/done
   provider: https://sis-t.redsys.es:25443/sis/realizarPago #dev enviroment
   #provider: https://sis.sermepa.es/sis/realizarPago #prod enviroment
-  url_ok: http://%vhost_name%/tpv/success
-  url_ko: http://%vhost_name%/tpv/failed
+  url_ok: http://%vhost_name%/demo/success
+  url_ko: http://%vhost_name%/demo/failed
   paymethod: T

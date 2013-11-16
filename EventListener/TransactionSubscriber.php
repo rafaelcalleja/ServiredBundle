@@ -6,15 +6,15 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use RC\ServiredBundle\Entity\Transaction;
 use RC\ServiredBundle\Event\ServiredEvent;
 use RC\ServiredBundle\Event\PaymentEvent;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use RC\ServiredBundle\Transaction\Response;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class TransactionSubscriber implements EventSubscriber {
 
     /** @var  $dispatcher \Symfony\Component\EventDispatcher\EventDispatcher */
     protected $dispatcher;
 
-    public function __construct(EventDispatcher $dispatcher){
+    public function __construct(EventDispatcherInterface $dispatcher){
         $this->dispatcher = $dispatcher;
     }
 
@@ -44,7 +44,7 @@ class TransactionSubscriber implements EventSubscriber {
             $event = new PaymentEvent($entity, $entity->getDsOrder(), $entity->getDsResponse(), $entityManager);
             $status = ( Response::isValid($entity->getDsResponse()) ) ? 'SUCCESS' : 'FAILED';
 
-            $raise = 'ServiredEvent::'.$prefix.'_PAYMENT_'.$status;
+            $raise = constant('RC\ServiredBundle\Event\ServiredEvent::'.$prefix.'_PAYMENT_'.$status);
             $this->dispatcher->dispatch($raise, $event);
         }
     }

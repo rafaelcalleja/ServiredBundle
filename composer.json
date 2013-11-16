@@ -17,12 +17,13 @@
     "require-dev": {
         "symfony/class-loader": ">=2.1,<2.3-dev",
         "doctrine/doctrine-bundle": "1.*",
+        "doctrine/orm": "2.3.x",
         "symfony/yaml": ">=2.1,<2.3-dev",
         "symfony/form": ">=2.1,<2.3-dev",
         "symfony/finder": ">=2.1,<2.3-dev",
-	"symfony/console": ">=2.1,<2.3-dev",
+	"symfony/console": "2.3.x",
 	"symfony/browser-kit": ">=2.1,<2.3-dev",
-	"doctrine/common": "dev-master as 2.3.x-dev"
+	"doctrine/common": "2.3.x-dev"
     },
     "autoload": {
         "psr-0": { "RC\\ServiredBundle": "" }

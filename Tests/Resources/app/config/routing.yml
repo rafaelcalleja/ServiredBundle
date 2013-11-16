@@ -1,0 +1,3 @@
+RCServiredBundle:
+        resource: "@RCServiredBundle/Resources/config/routing.xml"
+        prefix:   /tpv

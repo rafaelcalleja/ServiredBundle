@@ -15,9 +15,9 @@ class SessionManager {
     }
 
     public function create($amount, $order, $id){
-        $this->session->set(ServiredSession::RC_SERVIRED_AMOUNT_KEY, $amount);
-        $this->session->set(ServiredSession::RC_SERVIRED_ORDER_KEY, $order);
-        $this->session->set(ServiredSession::RC_SERVIRED_ID_KEY, $id);
+        $this->set(ServiredSession::RC_SERVIRED_AMOUNT_KEY, $amount);
+        $this->set(ServiredSession::RC_SERVIRED_ORDER_KEY, $order);
+        $this->set(ServiredSession::RC_SERVIRED_ID_KEY, $id);
     }
 
     public function remove(){
@@ -30,12 +30,13 @@ class SessionManager {
         return ( $this->session->get(ServiredSession::RC_SERVIRED_AMOUNT_KEY) && $this->session->get(ServiredSession::RC_SERVIRED_ORDER_KEY) && $this->session->get(ServiredSession::RC_SERVIRED_ID_KEY) );
     }
 
-    public function get($key){
-        return $this->session->get($key);
-    }
+    public function __call($method, $args){
 
-    public function set($key, $value){
-        return $this->session->set($key, $value);
+        if(method_exists($this->session, $method)){
+            return call_user_func_array(array($this->session, $method), $args);
+        }
+
+        throw new \BadMethodCallException(sprintf("No existe el metodo %s", $method));
     }
 
     public function getCurrentId(){

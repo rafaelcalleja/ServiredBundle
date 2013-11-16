@@ -3,4 +3,5 @@ imports:
     - { resource: framework.yml }
     #- { resource: monolog.yml }
     - { resource: doctrine.yml }
+    - { resource: servired.yml }
 

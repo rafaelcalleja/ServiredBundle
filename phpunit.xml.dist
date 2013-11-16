@@ -11,6 +11,9 @@
          syntaxCheck="false"
          bootstrap="Tests/bootstrap.php"
 >
+    <php>
+        <server name="KERNEL_DIR" value="Tests/Resources/app" />
+    </php>
 
     <testsuites>
         <testsuite name="ServiredBundle Test Suite">

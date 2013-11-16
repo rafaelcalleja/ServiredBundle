@@ -16,7 +16,8 @@ class Signature {
 	protected $url_ok;
 	protected $url_ko;
     protected $paymethod;
-	
+	protected $sumtotal;
+
 	public function __construct($clave, $name, $code, $terminal, $transactiontype, $provider, $paymethod){
 		$this->clave = $clave;
 		$this->name = $name;
@@ -30,11 +31,24 @@ class Signature {
 	public function getSignature($amount, $currency = 978){
 
         if(!$this->getOrder()){
-            throw new \InvalidArgumentException('Debes establecer $order via setOrder, antes de llamar a '.__FUNCTION__);
+            throw new \InvalidArgumentException(sprintf('Error en %s: antes debes usar setOrder($order)  ',__FUNCTION__));
         }
 
-		$message = ( $amount * 100 ).$this->getOrder().$this->code.$currency.$this->transactiontype.$this->url.$this->clave;
-		return strtoupper(sha1($message));
+        $message = function( $amount, $currency ) {
+
+            switch($this->transactiontype){
+                case 5:
+                case 'R':
+                    return  ( $amount * 100 ).$this->getOrder().$this->code.$currency.$this->getSumtotal().$this->transactiontype.$this->url.$this->clave;
+                    break;
+                default:
+                    return  ( $amount * 100 ).$this->getOrder().$this->code.$currency.$this->transactiontype.$this->url.$this->clave;
+                    break;
+            }
+
+        };
+
+		return strtoupper(sha1($message($amount, $currency)));
 	}
 
 
@@ -101,5 +115,23 @@ class Signature {
     {
         $this->url = $url;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSumtotal()
+    {
+        return $this->sumtotal;
+    }
+
+    /**
+     * @param mixed $sumtotal
+     */
+    public function setSumtotal($sumtotal)
+    {
+        $this->sumtotal = $sumtotal * 100;
+    }
+
+
 
 }

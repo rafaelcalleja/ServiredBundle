@@ -25,7 +25,7 @@ class Response{
 
         if(self::isValid($code)) return self::CODE_0000;
 
-        $strcode = 'CODE_'.$code;
+        $strcode = 'CODE_'.str_pad($code, 4, "0", STR_PAD_LEFT);
         if( defined('self::'.$strcode) ) return constant('self::'.$strcode);
 
         if( intval($code) > 912 && intval($code) <= 9912  ) return self::CODE_0912;

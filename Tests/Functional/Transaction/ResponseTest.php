@@ -31,7 +31,7 @@ class ResponseTest extends BaseTestCase  {
     }
 
     public function testGetMessageNotValid(){
-        $this->assertEquals(Response::getMessage('9913'), Response::CODE_FAILED);
+        $this->assertEquals(Response::getMessage('9996'), Response::CODE_FAILED);
         $this->assertEquals(Response::getMessage('99999'), Response::CODE_FAILED);
     }
 

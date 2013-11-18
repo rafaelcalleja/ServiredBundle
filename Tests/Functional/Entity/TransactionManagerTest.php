@@ -35,7 +35,7 @@ class TransactionManagerTest  extends BaseTestCase {
     public function testGetEM(){
 
         $em = $this->manager->getEntityManager();
-        $this->assertTrue($em instanceof ObjectManager);
+        $this->assertInstanceOf('Doctrine\Common\Persistence\ObjectManager', $em);
     }
 
     public function testFindFailed(){
@@ -51,7 +51,7 @@ class TransactionManagerTest  extends BaseTestCase {
 
         $this->transaction = $this->manager->find(12);
 
-        $this->assertTrue($this->transaction instanceof Transaction);
+        $this->assertInstanceOf('RC\ServiredBundle\Entity\Transaction', $this->transaction );
     }
 
     public function testIsOrderCompletedTrue(){

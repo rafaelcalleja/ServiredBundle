@@ -21,4 +21,5 @@ AnnotationRegistry::registerLoader(function($class) use ($loader) {
 });
 
 AnnotationRegistry::registerFile(__DIR__.'/../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
+AnnotationRegistry::registerAutoloadNamespace("Symfony\Component\Validator\Constraint", __DIR__.'/../vendor/symfony/validator/');
 

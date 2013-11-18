@@ -2,6 +2,7 @@
 
 namespace RC\ServiredBundle\Controller;
 
+use Doctrine\Common\Proxy\Exception\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,6 +11,8 @@ use RC\ServiredBundle\Entity\TPV;
 use RC\ServiredBundle\Entity\Transaction;
 use RC\ServiredBundle\Session\ServiredSession;
 use RC\ServiredBundle\Transaction\Response as TransactionResponse;
+use RC\ServiredBundle\Exception\NotFoundTransactionException;
+
 
 class DefaultController extends Controller
 {
@@ -110,7 +113,7 @@ class DefaultController extends Controller
         $transaction = $this->get('rc_servired.transaction.manager')->find($id);
 
         if(!$transaction instanceof Transaction){
-            throw new \Exception('Unknown Transaction');
+            throw new NotFoundTransactionException('Transaction not found');
         }
 
         return $transaction;

@@ -8,6 +8,10 @@ framework:
     validation:
         enabled: true
         enable_annotations: true
+    templating:
+        engines: ['twig']
     router:
         resource: %kernel.root_dir%/config/routing.yml
     default_locale: "en"
+twig:
+    exception_controller:  null
